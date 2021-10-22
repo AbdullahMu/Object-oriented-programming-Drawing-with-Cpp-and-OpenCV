@@ -4,25 +4,33 @@
 #include <iomanip>
 #include <iostream>
 
+// constructors
+
+// default constructor
 RGBMatrix::RGBMatrix()
     : Matrix(0, 0, 3)
 {
 }
 
+// copy constructor
 RGBMatrix::RGBMatrix(const RGBMatrix &mat)
     : Matrix(mat)
 {
 }
 
+// parameterized constructor
 RGBMatrix::RGBMatrix(size_t rows, size_t cols)
     : Matrix(rows, cols, 3)
 {
 }
+
+// parameterized constructor with matrix elements initialization value
 RGBMatrix::RGBMatrix(size_t rows, size_t cols, int initVal)
     : Matrix(rows, cols, 3, initVal)
 {
 }
 
+// methods
 BWMatrix RGBMatrix::toBW() const
 {
     BWMatrix res(m_rows, m_cols);
@@ -46,6 +54,7 @@ void RGBMatrix::print() const
     std::cout << *this << std::endl;
 }
 
+// OpenCV methods
 void RGBMatrix::fromOpenCV(const cv::Mat &mat)
 {
     if (mat.channels() != 3 || mat.depth() != CV_8U)
@@ -82,6 +91,7 @@ cv::Mat RGBMatrix::toOpenCV() const
     return mat;
 }
 
+// methods for matrix arithmatic operations
 bool RGBMatrix::readImage(const std::string &path)
 {
     cv::Mat rgbImage = cv::imread(path, cv::IMREAD_COLOR);
@@ -90,6 +100,7 @@ bool RGBMatrix::readImage(const std::string &path)
     fromOpenCV(rgbImage);
     return true;
 }
+
 
 RGBMatrix RGBMatrix::add(int val) const
 {
@@ -112,6 +123,7 @@ RGBMatrix RGBMatrix::subtract(int val) const
     return res;
 }
 
+// overloaded operators
 RGBMatrix RGBMatrix::operator+(int val) const
 {
     return add(val);

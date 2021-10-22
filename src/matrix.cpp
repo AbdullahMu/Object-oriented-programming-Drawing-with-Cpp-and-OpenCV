@@ -3,27 +3,33 @@
 #include <iostream>
 #include <iomanip>
 
+// constructors
 
+// default constructor
 Matrix::Matrix()
     : m_rows(0), m_cols(0)
 {
 }
 
+// copy constructor
 Matrix::Matrix(const Matrix &mat)
-    : m_rows(mat.m_rows), m_cols(mat.m_cols), m_data(mat.m_data)
+    : m_rows(mat.m_rows), m_cols(mat.m_cols), m_channels(channels), m_data(mat.m_data)
 {
 }
 
+// parameterized constructor
 Matrix::Matrix(size_t rows, size_t cols, size_t channels)
     : m_rows(rows), m_cols(cols), m_channels(std::max(channels, 1UL)), m_data(rows * cols * m_channels)
 {
 }
 
+// parameterized constructor with matrix elements initialization value
 Matrix::Matrix(size_t rows, size_t cols, size_t channels, int initValue)
     : m_rows(rows), m_cols(cols), m_channels(std::max(channels, 1UL)), m_data(rows * cols * m_channels, initValue)
 {
 }
 
+// OpenCV methods
 void Matrix::display() const
 {
     cv::imshow("Display image", toOpenCV());
@@ -33,11 +39,10 @@ void Matrix::display() const
 
 void Matrix::saveImage(const std::string &image_name) const
 {
-    // cv::imshow("Display image", toOpenCV());
     cv::imwrite(image_name + ".png", toOpenCV());
-    // cv::waitKey(0);
 }
 
+// overloaded assignment operator
 Matrix &Matrix::operator=(const Matrix &mat)
 {
     if (this != &mat)
@@ -50,6 +55,7 @@ Matrix &Matrix::operator=(const Matrix &mat)
     return *this;
 }
 
+// methods for matrix arithmatic operations
 void Matrix::add(Matrix &res, int val) const
 {
     for (size_t i = 0; i < m_data.size(); ++i)

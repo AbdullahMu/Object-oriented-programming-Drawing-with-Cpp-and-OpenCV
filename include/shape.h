@@ -14,7 +14,7 @@
 class Shape
 {
 public:
-    Shape();
+    Shape(){};
     virtual ~Shape() { delete m_color; }
     std::vector<Point> getPoints() const { return m_points; }
     const Color *getColor() const { return m_color; }
